@@ -1,3 +1,3 @@
 # Patterned repetition analysis
 
-TODO
+[Analysis](./analysis/analysis.md)

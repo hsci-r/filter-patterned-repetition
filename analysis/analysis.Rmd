@@ -1,5 +1,6 @@
 ```{r}
 library(dplyr)
+library(knitr)
 library(tidyr)
 ```
 
@@ -9,7 +10,47 @@ df <- read.table('../data/repetition.tsv', sep='\t', quote='',
 df$p_rep <- as.numeric(df$p_rep)
 ```
 
+## General distribution of repetition
+
+For all poems:
 ```{r}
-plot(df$n_verses, df$p_rep)
+par(mfrow=c(1, 2))
+hist(df$p_rep,
+     main="Histogram of proportion of repeated verses",
+     xlab="prop. of repeated verses")
+plot(1:nrow(df), df$p_rep,
+     main="Rank plot of proportion of repeated verses",
+     xlab="rank", ylab="prop. of repeated verses")
 ```
 
+Excluding the poems with zero repetition:
+```{r}
+p_rep_nonzero = df %>% filter(p_rep > 0.5) %>% pull(p_rep)
+par(mfrow=c(1, 2))
+hist(p_rep_nonzero,
+     main="Histogram of proportion of repeated verses",
+     xlab="prop. of repeated verses")
+plot(1:length(p_rep_nonzero), p_rep_nonzero,
+     main="Rank plot of proportion of repeated verses",
+     xlab="rank", ylab="prop. of repeated verses")
+```
+
+## By type
+
+Most repetetive types (only types containing at least 10 poems):
+```{r}
+df %>%
+  separate_rows(types, sep="; ") %>%
+  group_by(types) %>%
+  mutate(n = n(), avg_p_rep = mean(p_rep),
+         example = paste0("[", p_rep, "](", link, ")")) %>%
+  filter(row_number() <= 10) %>%
+  summarize(n = first(n), avg_p_rep = first(avg_p_rep), examples=paste(example, collapse="; ")) %>%
+  filter(n > 10) %>%
+  arrange(desc(avg_p_rep)) %>%
+  head(n = 20) %>%
+  kable()
+```
+
+TODO questions:
+- for poems with high repetition, do the repeating lines always repeat? or is it possible for them to also be "individual lines" in another poem?
