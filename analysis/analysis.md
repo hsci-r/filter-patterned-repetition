@@ -5,10 +5,12 @@
 ## General distribution of repetition
 
 For all poems:
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
+
+![plot of chunk p_rep-dist](figure/p_rep-dist-1.png)
 
 Excluding the poems with zero repetition:
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+
+![plot of chunk p_rep-dist-nonzero](figure/p_rep-dist-nonzero-1.png)
 
 ## By type
 

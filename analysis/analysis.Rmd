@@ -13,7 +13,8 @@ df$p_rep <- as.numeric(df$p_rep)
 ## General distribution of repetition
 
 For all poems:
-```{r}
+
+```{r p_rep-dist, fig.width=15}
 par(mfrow=c(1, 2))
 hist(df$p_rep,
      main="Histogram of proportion of repeated verses",
@@ -24,8 +25,9 @@ plot(1:nrow(df), df$p_rep,
 ```
 
 Excluding the poems with zero repetition:
-```{r}
-p_rep_nonzero = df %>% filter(p_rep > 0.5) %>% pull(p_rep)
+
+```{r p_rep-dist-nonzero, fig.width=15}
+p_rep_nonzero = df %>% filter(p_rep > 0) %>% pull(p_rep)
 par(mfrow=c(1, 2))
 hist(p_rep_nonzero,
      main="Histogram of proportion of repeated verses",
