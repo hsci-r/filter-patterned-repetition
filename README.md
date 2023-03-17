@@ -1,0 +1,3 @@
+# Patterned repetition analysis
+
+TODO

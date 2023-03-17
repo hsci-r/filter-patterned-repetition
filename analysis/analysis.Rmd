@@ -1,0 +1,15 @@
+```{r}
+library(dplyr)
+library(tidyr)
+```
+
+```{r}
+df <- read.table('../data/repetition.tsv', sep='\t', quote='',
+                 stringsAsFactors=F, header=T)
+df$p_rep <- as.numeric(df$p_rep)
+```
+
+```{r}
+plot(df$n_verses, df$p_rep)
+```
+
