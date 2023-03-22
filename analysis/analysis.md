@@ -12,6 +12,24 @@ Excluding the poems with zero repetition:
 
 ![plot of chunk p_rep-dist-nonzero](figure/p_rep-dist-nonzero-1.png)
 
+## By poem length
+
+Are longer poems more likely to contain repetition? The plots below
+indicate that it is the case. Here, we plot the *cumulative p_rep* of
+all poems longer than a certain length, against the given length.
+The cumulative p_rep is calculated as:
+```
+p_rep = (sum(number_of_lines) - sum(number_of_clusters)) / sum(number_of_lines)
+```
+where the sum goes over all the poems longer than the chosen length.
+
+![plot of chunk cum_p_rep-length](figure/cum_p_rep-length-1.png)
+
+The next plot shows the distribution of `p_rep` for different groups of poems,
+where groups are based on length ranges.
+
+![plot of chunk box-p_rep-length](figure/box-p_rep-length-1.png)
+
 ## By type
 
 Most repetetive types (only types containing at least 10 poems):
@@ -41,3 +59,4 @@ Most repetetive types (only types containing at least 10 poems):
 
 TODO questions:
 - for poems with high repetition, do the repeating lines always repeat? or is it possible for them to also be "individual lines" in another poem?
+
