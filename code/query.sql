@@ -7,7 +7,8 @@ SELECT
   GROUP_CONCAT(DISTINCT theme ORDER BY theme SEPARATOR "; ") AS types,
   GROUP_CONCAT(DISTINCT tlc ORDER BY tlc SEPARATOR "; ") AS tlc,
   IFNULL(lc.name, lp.name) AS region,
-  IF(lc.name IS NOT NULL, lp.name, NULL) AS parish
+  IF(lc.name IS NOT NULL, lp.name, NULL) AS parish,
+  pol.pol_id AS pol_id
 FROM (
   -- We need this in a subquery to set the types and verses that we
   -- don't want to count to NULL. This applies for:
@@ -38,6 +39,8 @@ FROM (
   LEFT JOIN p_loc ON t.p_id = p_loc.p_id
   LEFT JOIN locations lp ON lp.loc_id = p_loc.loc_id
   LEFT JOIN locations lc ON lp.par_id = lc.loc_id
+  LEFT JOIN pol_loc ON lp.loc_id = pol_loc.loc_id
+  LEFT JOIN polygons pol ON pol_loc.pol_id = pol.pol_id
   LEFT JOIN (
     -- A table counting the numbers of individual lines
     -- (verse clusters that occur only once in the poem).

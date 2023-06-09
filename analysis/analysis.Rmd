@@ -76,6 +76,37 @@ boxplot(p_rep ~ length_class, df2,
         xlab = "Length group", ylab = "p_rep")
 ```
 
+## By top-level category
+
+```{r box-p_rep-tlc, fig.width=8}
+df.tlc <- df %>%
+  separate_rows(tlc, sep="; ") %>%
+  filter(grepl('^[12456]', tlc))
+boxplot(p_rep ~ tlc, df.tlc %>% filter(p_rep > 0),
+        main = "Repetition by top-level category (excluding poems with no repetition)",
+        xlab = "top-level category", ylab="p_rep")
+#savePlot('figure/box-p_rep-tlc-1.png', 'png')
+```
+
+```{r bar-is_rep-tlc, fig.width=8}
+df.tlc.is_rep <- df.tlc %>%
+  mutate(is_rep = !is.na(p_rep) & p_rep > 0) %>%
+  group_by(tlc, is_rep) %>%
+  summarize(n = n())
+barplot(n ~ is_rep+tlc, df.tlc.is_rep, col=c('blue', 'red'),
+        legend.text=c('no repetition', 'repetition'),
+        main="Number of poems with and without repetition",
+        xlab="top-level category", ylab="number of poems", ylim=c(0, 40000))
+#savePlot('figure/bar-is_rep-tlc-1.png', 'png')
+```
+
+```{r box-p_rep-tlc-long, fig.width=8}
+boxplot(p_rep ~ tlc, df.tlc %>% filter(p_rep > 0 & n_verses > 20),
+        main = "Repetition by top-level category (excluding poems with no repetition, length > 20)",
+        xlab = "top-level category", ylab="p_rep")
+#savePlot('figure/box-p_rep-tlc-long-1.png', 'png')
+```
+
 ## By type
 
 Most repetetive types (only types containing at least 10 poems):
@@ -96,3 +127,18 @@ df %>%
 TODO questions:
 - for poems with high repetition, do the repeating lines always repeat? or is it possible for them to also be "individual lines" in another poem?
 
+## By location
+
+```{r}
+df.perc_rep.by_loc <- df %>%
+  group_by(pol_id) %>%
+  summarize(perc_rep_0 = sum(!is.na(p_rep) & p_rep > 0) / n(),
+            perc_rep_0.2 = sum(!is.na(p_rep) & p_rep > 0.2) / n(),
+            perc_rep_0.5 = sum(!is.na(p_rep) & p_rep > 0.5) / n())
+write.csv(df.perc_rep.by_loc %>% rename(y = perc_rep_0) %>% select(pol_id, y),
+           '../data/perc_rep_by_loc_0.csv', quote=F, row.names=F)
+write.csv(df.perc_rep.by_loc %>% rename(y = perc_rep_0.2) %>% select(pol_id, y),
+           '../data/perc_rep_by_loc_0.2.csv', quote=F, row.names=F)
+write.csv(df.perc_rep.by_loc %>% rename(y = perc_rep_0.5) %>% select(pol_id, y),
+           '../data/perc_rep_by_loc_0.5.csv', quote=F, row.names=F)
+```
