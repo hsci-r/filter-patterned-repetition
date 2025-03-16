@@ -107,6 +107,31 @@ boxplot(p_rep ~ tlc, df.tlc %>% filter(p_rep > 0 & n_verses > 20),
 #savePlot('figure/box-p_rep-tlc-long-1.png', 'png')
 ```
 
+## By length and top-level category
+
+```{r p_rep-tlc-length, fig.width=10, fig.height=20}
+df2.tlc <- df2 %>%
+  separate_rows(tlc, sep="; ") %>%
+  filter(grepl('^[12456]', tlc))
+par(mfrow=c(5,2))
+for (pattern in paste0('^', c(1,2,4,5,6), '.')) {
+  df2.this_tlc <- df2.tlc %>%
+    filter(grepl(pattern, tlc))
+  df2.this_tlc.is_rep <- df2.this_tlc %>%
+    mutate(is_rep = !is.na(p_rep) & p_rep > 0) %>%
+    group_by(length_class, is_rep) %>%
+    summarize(n = n())
+  tlc <- df2.this_tlc[1,"tlc"]
+  barplot(n ~ is_rep+length_class, df2.this_tlc.is_rep, col=c('blue', 'red'),
+          legend.text=c('no repetition', 'repetition'),
+          main=paste(tlc, ": number of poems with and without repetition"),
+          xlab="Length group", ylab="number of poems", ylim=c(0, 16000))
+  boxplot(p_rep ~ length_class, df2.this_tlc,
+          main=paste(tlc, ": repetition by length group"),
+          xlab="Length group", ylab="p_rep", ylim=c(0, 1))
+}
+```
+
 ## By type
 
 Most repetetive types (only types containing at least 10 poems):

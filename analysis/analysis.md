@@ -34,21 +34,13 @@ where groups are based on length ranges.
 
 ![plot of chunk box-p_rep-tlc](figure/box-p_rep-tlc-1.png)
 
-```
-## Error in savePlot("figure/box-p_rep-tlc-1.png", "png"): can only copy from 'X11(type="*cairo")' devices
-```
-
 ![plot of chunk bar-is_rep-tlc](figure/bar-is_rep-tlc-1.png)
-
-```
-## Error in savePlot("figure/bar-is_rep-tlc-1.png", "png"): can only copy from 'X11(type="*cairo")' devices
-```
 
 ![plot of chunk box-p_rep-tlc-long](figure/box-p_rep-tlc-long-1.png)
 
-```
-## Error in savePlot("figure/box-p_rep-tlc-long-1.png", "png"): can only copy from 'X11(type="*cairo")' devices
-```
+## By length and top-level category
+
+![plot of chunk p_rep-tlc-length](figure/p_rep-tlc-length-1.png)
 
 ## By type
 
