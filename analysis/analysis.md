@@ -28,7 +28,7 @@ where the sum goes over all the poems longer than the chosen length.
 The next plot shows the distribution of `p_rep` for different groups of poems,
 where groups are based on length ranges.
 
-![plot of chunk box-p_rep-length](figure/box-p_rep-length-1.png)
+![plot of chunk p_rep-length](figure/p_rep-length-1.png)
 
 ## By top-level category
 
